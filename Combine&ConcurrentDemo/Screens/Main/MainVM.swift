@@ -137,6 +137,30 @@ class MainVM: ObservableObject {
         }
     }
     
+    private func saveImagesOnDisk() throws -> [Path] {
+        return try images.map { try saveOnDisk(image: $0) }
+    }
+    
+    private func saveOnDisk(image: UIImage) throws -> Path {
+        let temporaryDirectoryPath = FileManager.default.temporaryDirectory
+        
+        let imageName = UUID().uuidString + ".png"
+        let imagePath = temporaryDirectoryPath.appendingPathComponent(imageName)
+        
+        guard let data = image.pngData() else { throw AppError.pngDataTransformationFailed }
+        try data.write(to: imagePath)
+        return imagePath
+    }
+    
+    private func saveImagesOnDiskAndUpload() {
+        do {
+            let paths = try saveImagesOnDisk()
+            uploadFiles(with: paths)
+        } catch {
+            state = .finished(error: error)
+        }
+    }
+    
     private func downloadURLsAndSaveInfoToCoreData() {
         downloadURLs()
              .compactMap { [weak self] in self?.createModelIfPossible(with: $0) }
@@ -245,8 +269,21 @@ class MainVM: ObservableObject {
             } receiveValue: { [weak self] snapshots in
                 self?.snapshots = snapshots
                 print(snapshots.map({ $0?.progress?.localizedDescription }))
-            }
-            .store(in: &subscriptions)
+            }.store(in: &subscriptions)
+    }
+    
+    private func uploadFiles(with paths: [Path]) {
+        imageUploadingService.uploadFiles(from: paths, threadsCount: self.threadsCount)
+            .filter { [weak self] _ in self?.state == .inProgress }
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished: self?.state = .finished(error: nil)
+                case .failure(let error): self?.state = .finished(error: error)
+                }
+            } receiveValue: { [weak self] snapshots in
+                self?.snapshots = snapshots
+                print(snapshots.map({ $0?.progress?.localizedDescription }))
+            }.store(in: &subscriptions)
     }
     
     private func downloadURLs() -> AnyPublisher<[URL], Error> {
@@ -321,8 +358,7 @@ extension MainVM {
                 case .inProgress: self.state = .ready
                 default: break
                 }
-            }
-            .store(in: &subscriptions)
+            }.store(in: &subscriptions)
     }
     
     func bindSliderAction(_ publisher: AnyPublisher<Float, Never>) {

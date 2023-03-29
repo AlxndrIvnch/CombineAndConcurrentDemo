@@ -11,3 +11,5 @@ import Foundation
 
 typealias EmptyClosure = (() -> Void)
 typealias SimpleClosure<Value> = ((Value) -> Void)
+
+typealias Path = URL

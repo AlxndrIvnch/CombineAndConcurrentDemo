@@ -26,7 +26,7 @@ class ImagePreviewVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
         
-        myCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        myCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         myCollectionView.delegate = self
         myCollectionView.dataSource = self
         myCollectionView.register(ImagePreviewFullViewCell.self, forCellWithReuseIdentifier: "ImagePreviewFullViewCell")
