@@ -8,11 +8,18 @@
 import PhotosUI
 import Combine
 
-class PHPickerManager {
+final class PHPickerManager {
+    
+    // MARK: - Singletone
+    
     static let shared = PHPickerManager()
     private init() {}
     
+    // MARK: - Properties
+    
     private var passthroughSubject: PassthroughSubject<[PHPickerResult], Never>!
+    
+    // MARK: - Methods
     
     func showPHPicker(with configuration: PHPickerConfiguration = .init()) -> AnyPublisher<[PHPickerResult], Never> {
         let picker = createPHPicker(configuration: configuration)
@@ -31,6 +38,8 @@ class PHPickerManager {
         return picker
     }
 }
+
+// MARK: - PHPickerViewControllerDelegate
 
 extension PHPickerManager: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {

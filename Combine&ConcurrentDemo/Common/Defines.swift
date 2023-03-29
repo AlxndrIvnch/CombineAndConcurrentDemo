@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Type Aliases
+
 typealias EmptyClosure = (() -> Void)
 typealias SimpleClosure<Value> = ((Value) -> Void)
-

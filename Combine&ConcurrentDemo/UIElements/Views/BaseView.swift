@@ -6,3 +6,23 @@
 //
 
 import Foundation
+import UIKit
+
+class BaseView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        customInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        customInit()
+    }
+
+    private func customInit() {
+        self.nibSetup()
+        setupUI()
+    }
+
+    func setupUI() { }
+}

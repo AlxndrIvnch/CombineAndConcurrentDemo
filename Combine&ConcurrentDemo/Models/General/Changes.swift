@@ -7,46 +7,35 @@
 
 import Foundation
 
-extension Sequence where Element == Int {
-    func createIndexPaths(for section: Int = 0) -> [IndexPath] {
-        return self.map { IndexPath(item: $0, section: section) }
-    }
-    
-    func createSectionIndexPaths() -> [IndexPath] {
-        return self.map { IndexPath(item: 0, section: $0) }
-    }
-}
+// MARK: - Static Instances
 
-extension Set where Element == Int {
-    func createIndexPaths(for section: Int = 0) -> [IndexPath] {
-        return self.map { IndexPath(item: $0, section: section) }
-    }
-    
-    func createSectionIndexPaths() -> [IndexPath] {
-        return self.map { IndexPath(item: 0, section: $0) }
-    }
+extension Changes {
+    static let none = Changes(inserted: nil, removed: nil, updated: nil, insertedSection: [], removedSection: [], scrollTo: nil)
 }
 
 struct Changes: Equatable {
-    static let none = Changes(inserted: nil, removed: nil, updated: nil, insertedSection: [], removedSection: [], scrollTo: nil)
-    //indices
+    
+    // MARK: - Properties
+    
     private(set) var inserted: [IndexPath]
     private(set) var removed: [IndexPath]
     private(set) var updated: [IndexPath]
     
     private(set) var insertedSection: [Int] = []
     private(set) var removedSection: [Int] = []
+
+    let scrollTo: IndexPath?
+    
+    var isEmpty: Bool { inserted.isEmpty && removed.isEmpty && updated.isEmpty }
+    
+    // MARK: - SectionAction
     
     enum SectionAction {
         case insert
         case remove
     }
     
-    let scrollTo: IndexPath?
-    
-    var isEmpty: Bool {
-        inserted.isEmpty && removed.isEmpty && updated.isEmpty
-    }
+    // MARK: - Initializers
     
     init(inserted: [Int] = [], removed: [Int] = [], updated: [Int] = [],
          section: Int = 0, sectionAction: SectionAction? = nil, scrollTo: IndexPath? = nil) {

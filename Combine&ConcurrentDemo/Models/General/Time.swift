@@ -12,6 +12,9 @@ extension TimeInterval {
 }
 
 struct Time {
+    
+    // MARK: - Properties
+    
     let years: Int
     let days: Int
     let hours: Int
@@ -34,6 +37,8 @@ struct Time {
         format += "%02d:%02d.%03d"
         return String(format: format, minutes, seconds, milliseconds)
     }
+    
+    // MARK: - Init
     
     init(seconds: TimeInterval) {
         let secondsInyear = 60 * 60 * 24 * 365

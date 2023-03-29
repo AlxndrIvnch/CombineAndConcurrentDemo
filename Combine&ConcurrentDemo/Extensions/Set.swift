@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+extension Set where Element == Int {
+    func createIndexPaths(for section: Int = 0) -> [IndexPath] {
+        return self.map { IndexPath(item: $0, section: section) }
+    }
+    
+    func createSectionIndexPaths() -> [IndexPath] {
+        return self.map { IndexPath(item: 0, section: $0) }
+    }
+}

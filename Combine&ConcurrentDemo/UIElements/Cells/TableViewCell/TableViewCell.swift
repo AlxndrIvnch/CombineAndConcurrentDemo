@@ -8,16 +8,22 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    var viewModel: TableViewCellVM!
+    
+    // MARK: - Setup
+    
+    func setup(with viewModel: TableViewCellVM) {
+        var contentConfiguration = self.defaultContentConfiguration()
+        contentConfiguration.text = viewModel.title
+        contentConfiguration.secondaryText = viewModel.subtitle
+        contentConfiguration.secondaryTextProperties.font = .systemFont(ofSize: 14)
+        contentConfiguration.textToSecondaryTextVerticalPadding = 8
+        contentConfiguration.prefersSideBySideTextAndSecondaryText = false
+        contentConfiguration.image = viewModel.image
+        self.contentConfiguration = contentConfiguration
     }
 
 }

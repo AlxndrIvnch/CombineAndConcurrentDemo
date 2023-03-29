@@ -9,12 +9,19 @@ import UIKit
 import Firebase
 
 class ImageProgressCell: UITableViewCell {
-    private var viewModel: ImageProgressCellVM!
+    
+    // MARK: - Properties
+    
+    var viewModel: ImageProgressCellVM!
+    
+    // MARK: - Lifecycle
     
     override func prepareForReuse() {
         super.prepareForReuse()
         viewModel = nil
     }
+    
+    // MARK: - Setup
     
     func setup(viewModel: ImageProgressCellVM) {
         self.viewModel = viewModel

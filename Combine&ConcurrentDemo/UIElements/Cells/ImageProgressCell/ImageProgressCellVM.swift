@@ -11,8 +11,13 @@ import Firebase
 import UIKit.UIImage
 
 struct ImageProgressCellVM: Hashable {
+    
+    // MARK: - Properties
+    
     let image: UIImage
     let progress: Float?
+    
+    // MARK: - Init
     
     init(image: UIImage, snapshot: StorageTaskSnapshot? = nil) {
         self.image = image

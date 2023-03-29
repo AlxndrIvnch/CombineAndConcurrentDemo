@@ -10,6 +10,9 @@ import Combine
 import CombineCocoa
 
 final class AlertManager {
+    
+    // MARK: - AlertAction
+    
     struct AlertAction {
         static let ok = AlertAction(title: "OK")
         static let cancel = AlertAction(title: "Cancel", style: .cancel)
@@ -24,6 +27,8 @@ final class AlertManager {
             self.style = style
         }
     }
+    
+    // MARK: - Methods
     
     @discardableResult static func showAlertOnTopVC<T: UIViewController>(of type: T.Type,
                                                       title: String? = nil,

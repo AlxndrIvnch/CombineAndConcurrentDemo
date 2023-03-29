@@ -7,15 +7,22 @@
 
 import UIKit
 
+// MARK: - Protocols
+
 protocol HistoryCoordinatorTransitions: AnyObject {}
 
 protocol HistoryCoordinatorType: AnyObject {
-    func showTestDetails(with testInfo: TestInfo)
+    func showImagesGreed(with images: [URL])
 }
 
 class HistoryCoordinator: TabBarCoordinatable {
+    
+    // MARK: - Properties
+    
     private weak var navigationController: UINavigationController!
     private weak var transitions: HistoryCoordinatorTransitions?
+    
+    // MARK: - TabBarCoordinatable
     
     lazy var rootVC: UIViewController = {
         let historyVC = HistoryTVC(style: .plain)
@@ -26,6 +33,8 @@ class HistoryCoordinator: TabBarCoordinatable {
         self.navigationController = navigationController
         return navigationController
     }()
+    
+    // MARK: - Init/Deinit
     
     init(transitions: HistoryCoordinatorTransitions?) {
         self.transitions = transitions
@@ -38,13 +47,13 @@ class HistoryCoordinator: TabBarCoordinatable {
 }
 
 // MARK: - ProfileTabCoordinatorType -
+
 extension HistoryCoordinator: HistoryCoordinatorType {
-    func showTestDetails(with testInfo: TestInfo) {
-        let photosGreedVC = PhotosGreedVC()
-        photosGreedVC.images = testInfo.images
+    func showImagesGreed(with images: [URL]) {
+        let photosGreedVC = ImagesGreedVC()
+        photosGreedVC.images = images
         photosGreedVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(photosGreedVC, animated: true)
     }
-    
 }
 

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+//MARK: - Capitalized sentence
+extension String {
+    var capitalizedSentence: String {
+        self.prefix(1).capitalized + self.dropFirst()
+    }
+}

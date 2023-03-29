@@ -7,13 +7,20 @@
 
 import UIKit
 
+// MARK: - Protocols
+
 protocol MainCoordinatorTransitions: AnyObject {}
 
 protocol MainCoordinatorType: AnyObject {}
 
 class MainCoordinator: TabBarCoordinatable {
+    
+    // MARK: - Properties
+    
     private weak var navigationController: UINavigationController!
     private weak var transitions: MainCoordinatorTransitions?
+    
+    // MARK: - TabBarCoordinatable
     
     lazy var rootVC: UIViewController = {
         let mainVC: MainVC = UIStoryboard.main.instantiate()
@@ -24,6 +31,8 @@ class MainCoordinator: TabBarCoordinatable {
         self.navigationController = navigationController
         return navigationController
     }()
+    
+    // MARK: - Init/Deinit
     
     init(transitions: MainCoordinatorTransitions?) {
         self.transitions = transitions
@@ -36,4 +45,5 @@ class MainCoordinator: TabBarCoordinatable {
 }
 
 // MARK: - ProfileTabCoordinatorType -
+
 extension MainCoordinator: MainCoordinatorType {}
