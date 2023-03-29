@@ -22,7 +22,7 @@ class ImagesGreedVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         myCollectionView.delegate=self
         myCollectionView.dataSource=self
         myCollectionView.register(PhotoItemCell.self, forCellWithReuseIdentifier: "Cell")
-        myCollectionView.backgroundColor=UIColor.white
+        myCollectionView.backgroundColor = .systemBackground
         self.view.addSubview(myCollectionView)
         
         myCollectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
